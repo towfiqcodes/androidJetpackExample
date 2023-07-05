@@ -5,22 +5,21 @@ import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.view.View
 import android.widget.TextView
+import androidx.databinding.DataBindingUtil
 import androidx.lifecycle.ViewModelProvider
+import com.example.quotesusingviewmodel.databinding.ActivityMainBinding
 import com.example.quotesusingviewmodel.model.Quote
 import com.example.quotesusingviewmodel.viewModel.MainViewModel
 import com.example.quotesusingviewmodel.viewModel.MainViewModelFactory
 
 class MainActivity : AppCompatActivity() {
+    lateinit var binding: ActivityMainBinding
     lateinit var mainViewModel: MainViewModel
-    private val quoteText: TextView
-        get() = findViewById(R.id.quoteText)
 
-    private val quoteAuthor: TextView
-        get() = findViewById(R.id.quoteAuthor)
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        setContentView(R.layout.activity_main)
+        binding =DataBindingUtil.setContentView(this,R.layout.activity_main)
         mainViewModel =
             ViewModelProvider(this, MainViewModelFactory(application))[MainViewModel::class.java]
         setQuote(mainViewModel.getQuote())
@@ -28,8 +27,9 @@ class MainActivity : AppCompatActivity() {
     }
 
     fun setQuote(quote: Quote) {
-        quoteText.text = quote.text
-        quoteAuthor.text = quote.author
+//       binding.quoteText.text = quote.text
+//        binding.quoteAuthor.text = quote.author
+        binding.quote=quote
     }
 
     fun onNext(view: View) {
